@@ -13,7 +13,7 @@ def add_note(note, owner=''):
 			return jsonify(id=new_note.id), 200 # vse ok
 		except:
 			return Response(status=422) # smth went wrong
-	return Response(status=422) # len(note) < 1
+	return jsonify(msg="Заметка слишком короткая!"), 401
 
 
 def get_notes(owner=''):
@@ -21,7 +21,7 @@ def get_notes(owner=''):
 		notes = [r.note for r in models.Note.query.filter_by(owner=owner).distinct()] # генерирует список всех заметок
 		return jsonify(notes=notes) # переводим в JSON и возвращаем
 	except:
-		return Response(status=422)
+		return jsonify(msg="Не найдено ни одной заметки"), 404
 
 
 def del_note(id):
@@ -30,4 +30,4 @@ def del_note(id):
 		db.session.commit()
 		return Response(status=200)
 	except:
-		return Response(status=404)
+		return jsonify(msg="Заметка не найдена"), 404
