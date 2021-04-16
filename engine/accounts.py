@@ -1,6 +1,9 @@
 from flask import Response
+from flask_jwt_extended import create_access_token
 import hashlib
 import models
+import time
+from flask import jsonify
 from app import db
 
 def add_user(username, password):
@@ -9,15 +12,15 @@ def add_user(username, password):
 		try:
 			db.session.add(user)
 			db.session.commit()
-			return 'Вы успешно зарегистрировались', 200
+			return jsonify(msg='Вы успешно зарегистрировались'), 200
 		except:
-			return 'Аккаунт с таким именем пользователя уже существует', 401
-	return 'Пароль слишком короткий', 401
+			return jsonify(msg='Аккаунт с таким именем пользователя уже существует'), 401
+	return jsonify(msg='Пароль слишком короткий'), 401
 
 
 def login(username, password):
-	try:
-		user = models.User.query.filter_by(username=username, password=hashlib.md5(password.encode()).hexdigest()).first()	
-		# jwt token
-	except:
-		return 'Проверьте правильность введенных данных', 401
+	user = models.User.query.filter_by(username=username, password=hashlib.md5(password.encode()).hexdigest()).first()
+	if user == None:
+		return jsonify(msg='Неправильный логин/пароль'), 401
+	access_token = create_access_token(identity=username)
+	return jsonify(access_token=access_token)
