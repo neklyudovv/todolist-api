@@ -36,12 +36,12 @@ def sign_in(): # логин пользователя
 
 @app.route('/add-note', methods = ['POST'])
 def new_note(): # добавление нового таска
-	return notes.add_note(request.json['note'])
+	return notes.add_note(request.json['username'], request.json['note'])
 
 
 @app.route('/get-notes', methods = ['GET'])
 def get_notes(): # возвращает все таски
-	return notes.get_notes()
+	return notes.get_notes(request.json['username'])
 
 
 @app.route('/del-note', methods = ['POST'])

@@ -2,8 +2,8 @@ from flask import Response
 from app import db
 
 class User(db.Model): 
-	id = db.Column(db.Integer(), primary_key=True)
-	username = db.Column(db.String(20), primary_key=True, nullable=False)
+	id = db.Column(db.Integer(), primary_key=True, nullable=False)
+	username = db.Column(db.String(20), primary_key=True)
 	password = db.Column(db.String(), nullable=False)
 
 	def __repr__(self):
