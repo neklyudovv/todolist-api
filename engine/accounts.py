@@ -18,7 +18,7 @@ def add_user(username, password):
 			except:
 				return jsonify(msg='Ошибка базы данных'), 500
 		return jsonify(msg='Пароль слишком короткий'), 401
-	return jsonify(msg='Аккаунт с таким именем пользователя уже существует'), 401
+	return jsonify(msg='Аккаунт с таким именем пользователя уже существует'), 409
 
 
 def login(username, password):

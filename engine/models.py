@@ -10,9 +10,9 @@ class User(db.Model):
 		return '<User %r>' % self.username
 
 
-class Note(db.Model): 
+class Task(db.Model): 
 	id = db.Column(db.Integer(), primary_key=True, nullable=False)
-	note = db.Column(db.String(300), nullable=False)
+	text = db.Column(db.String(300), nullable=False)
 	owner = db.Column(db.String(), default='')
 
 	def __repr__(self):
