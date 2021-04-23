@@ -18,32 +18,34 @@ jwt = JWTManager(app)
 db = SQLAlchemy(app)
 
 import tasks
-import accounts
+#import accounts
 
 @app.route('/')
 def index(): # возвращает 201, указывая на то, что все работает
 	return flask.Response(status=201)
 
 
-@app.route('/signup', methods = ['POST'])
-def sign_up(): # регистрация пользователя
-	return accounts.add_user(request.json['username'], request.json['password'])
+#@app.route('/signup', methods = ['POST'])
+#def sign_up(): # регистрация пользователя
+#	return accounts.add_user(request.json['username'], request.json['password'])
 
 
-@app.route('/login', methods = ['POST'])
-def sign_in(): # логин пользователя
-	return accounts.login(request.json['username'], request.json['password'])
+#@app.route('/login', methods = ['POST'])
+#def sign_in(): # логин пользователя
+#	return accounts.login(request.json['username'], request.json['password'])
 
 
 @app.route('/tasks', methods = ['GET'])
 def get_tasks(): # возвращает все таски конкретного человека, принимает 'username'
-	return tasks.get_tasks(request.json['username'])
+				 # убрал аргумент юзернейм по той же причине что и прошлый роут
+	return tasks.get_tasks()
 
 
 @app.route('/tasks/add', methods = ['POST'])
 def new_task(): # добавление нового таска, принимает в идеале 'username' и 'text'
+				# но пока что я юзернейм убрал т.к. у тебя не написана регистрация;
 				# возвращает айди таска
-	return tasks.add_task(request.json['text'], request.json['username'])
+	return tasks.add_task(request.json['text'])
 
 
 @app.route('/tasks/del', methods = ['DELETE'])
