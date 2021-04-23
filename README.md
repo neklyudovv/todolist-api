@@ -1,7 +1,7 @@
 # todolist
 Простой REST API для to-do листа.
 
-Используемые технологии: Flask, JWT, CORS, SQLALCHEMY и другие
+Используемые технологии: Flask, JWT, SQLALCHEMY и другие
 
 # Что из себя представляет: 
 
