@@ -35,11 +35,10 @@ def get_tasks(owner=''):
 	return jsonify(msg='Пользователь не найден'), 404
 
 
-def del_task(id):
-	try:
-		models.Task.query.filter_by(id=id).delete()
-		db.session.commit()
-		return jsonify(id=id)
-		# esli pitaewsa udalitb ne svou - return 403 
-	except:
+def del_task(id, owner=''):
+	if models.Task.query.filter_by(id=id, owner=owner).first() == None:
 		return jsonify(msg='Задача не найдена'), 404
+	
+	models.Task.query.filter_by(id=id).delete()
+	db.session.commit()
+	return jsonify(id=id)

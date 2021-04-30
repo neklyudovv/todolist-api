@@ -48,7 +48,7 @@ def new_task(): # добавление нового таска, принимае
 
 @app.route('/tasks/del', methods = ['DELETE'])
 def del_task(): # удаляет таск, принимает айди таска
-	return tasks.del_task(request.json['id'])
+	return tasks.del_task(request.json['id'], request.json['username'])
 
 if __name__ == "__main__":
 	app.run(debug=True)
