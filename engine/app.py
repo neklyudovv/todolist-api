@@ -36,19 +36,25 @@ def sign_in(): # логин пользователя
 
 
 @app.route('/tasks', methods = ['GET'])
+@jwt_required()
 def get_tasks(): # возвращает все таски конкретного человека, принимает 'username'
-	return tasks.get_tasks(request.json['username'])
+	username = get_jwt_identity()
+	return tasks.get_tasks(username)
 
 
 @app.route('/tasks/add', methods = ['POST'])
+@jwt_required()
 def new_task(): # добавление нового таска, принимает в идеале 'username' и 'text'
 				# возвращает айди таска
-	return tasks.add_task(request.json['text'], request.json['username'])
+	username = get_jwt_identity()
+	return tasks.add_task(request.json['text'], username)
 
 
 @app.route('/tasks/del', methods = ['DELETE'])
+@jwt_required()
 def del_task(): # удаляет таск, принимает айди таска
-	return tasks.del_task(request.json['id'], request.json['username'])
+	username = get_jwt_identity()
+	return tasks.del_task(request.json['id'], username)
 
 if __name__ == "__main__":
 	app.run(debug=True)

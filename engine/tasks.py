@@ -4,6 +4,7 @@ from app import db
 from flask import jsonify
 import models
 import time
+from flask_jwt_extended import get_jwt_identity
 
 def check_user(username):
 	user = models.User.query.filter_by(username=username).first()
@@ -35,10 +36,10 @@ def get_tasks(owner=''):
 	return jsonify(msg='Пользователь не найден'), 404
 
 
-def del_task(id, owner=''):
-	if models.Task.query.filter_by(id=id, owner=owner).first() == None:
-		return jsonify(msg='Задача не найдена'), 404
-	
-	models.Task.query.filter_by(id=id).delete()
-	db.session.commit()
-	return jsonify(id=id)
+def del_task(id, username):
+	task = models.Task.query.filter_by(id=int(id)).first()
+	if task and task.owner == username:
+		models.Task.query.filter_by(id=int(id)).delete()
+		db.session.commit()
+		return jsonify(id=id)
+	return jsonify(msg='Задача не найдена'), 404

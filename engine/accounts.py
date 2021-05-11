@@ -23,7 +23,7 @@ def add_user(username, password):
 
 def login(username, password):
 	user = models.User.query.filter_by(username=username, password=hashlib.md5(password.encode()).hexdigest()).first()
-	if user == None:
+	if not user:
 		return jsonify(msg='Неправильный логин/пароль'), 401
 	access_token = create_access_token(identity=username)
 	return jsonify(access_token=access_token)
