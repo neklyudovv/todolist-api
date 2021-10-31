@@ -37,9 +37,9 @@ def get_tasks(owner=''):
 
 
 def del_task(id, username):
-	task = models.Task.query.filter_by(id=int(id)).first()
+	task = models.Task.query.filter_by(id=id).first()
 	if task and task.owner == username:
-		models.Task.query.filter_by(id=int(id)).delete()
+		models.Task.query.filter_by(id=id).delete()
 		db.session.commit()
 		return jsonify(id=id)
 	return jsonify(msg='Задача не найдена'), 404
